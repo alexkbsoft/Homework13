@@ -10,7 +10,7 @@ public class FollowCamera : MonoBehaviour
 
     void Start()
     {
-        _player = GameObject.Find("Player");
+        _player = GameObject.Find("LookTarget");
         _offset = (Vector3.back + Vector3.up);
         _offset = _player.transform.TransformDirection(_offset);
     }

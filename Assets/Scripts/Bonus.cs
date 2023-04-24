@@ -15,6 +15,9 @@ public class Bonus : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            PlayerController pc = other.gameObject.GetComponent<PlayerController>();
+            pc.GetBonus();
+
             OnGetBonus();
         }
     }
@@ -32,11 +35,16 @@ public class Bonus : MonoBehaviour
             _coinBody.transform.parent = null;
             _bonusGotEffect.transform.parent = null;
 
-            _coinBody.AddComponent<Rigidbody>();
+            var rb = _coinBody.AddComponent<Rigidbody>();
+            rb.AddForce(Vector3.up * 4, ForceMode.Impulse);
+            rb.AddTorque(0, 60, 0, ForceMode.VelocityChange);
+
             var meshColider = _coinBody.AddComponent<MeshCollider>();
             meshColider.convex = true;
+            meshColider.isTrigger = true;
 
             Destroy(gameObject);
+            Destroy(_coinBody, 1);
         }
     }
 }
